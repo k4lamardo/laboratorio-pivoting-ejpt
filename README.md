@@ -41,7 +41,7 @@ Visibilidad del Objetivo Oculto: Validamos desde la consola del Windows Server q
 
 Direccionamiento local de Metasploitable: Verificación local en la máquina objetivo confirmando su IP estática asignada en el segmento interno.
 
-
+![Evidencia Ping](metasploitable-ip.png)
 
 
 
