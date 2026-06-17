@@ -27,7 +27,10 @@ Se intenta lanzar un ping directo desde Kali (`10.10.10.5`) hacia el objetivo fi
 
 ```bash
 ping -c 2 192.168.50.20
-![Evidencia Ping](ping-kali-metasploitable.png)
+
+
+
+
 
 
 
