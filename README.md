@@ -25,9 +25,7 @@ El escenario simula una infraestructura empresarial donde el atacante no tiene a
 ### Paso 1.1: Evidencia de aislamiento desde la máquina atacante (Kali Linux)
 Se intenta lanzar un ping directo desde Kali (`10.10.10.5`) hacia el objetivo final oculto (`192.168.50.20`). Al no existir enrutamiento directo, el tráfico se pierde por completo (100% packet loss).
 
-```bash
-ping -c 2 192.168.50.20
-
+![Evidencia Ping](ping-kali-metasploitable.png)
 
 
 
