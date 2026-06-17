@@ -22,10 +22,10 @@ El escenario simula una infraestructura empresarial donde el atacante no tiene a
 3. **Pivoting con Metasploit:** Configurar rutas automáticas (`autoroute`) hacia la red oculta.
 4. **Túnel de Red Global:** Desplegar un proxy SOCKS5 integrado con `proxychains` para auditar la red interna con herramientas externas como Nmap.
 
-Fase 1: Verificación de Conectividad y Aislamiento de Red
+## Fase 1: Verificación de Conectividad y Aislamiento de Red
 Antes de lanzar cualquier explotación, se realiza una auditoría completa de la topología de red para demostrar el aislamiento de los activos y verificar los vectores de comunicación disponibles.
 
-Paso 1.1: Conectividad desde la Máquina Atacante (Kali Linux)
+### Paso 1.1: Conectividad desde la Máquina Atacante (Kali Linux)
 Aislamiento hacia el Objetivo Final: Intentamos enviar tráfico directo desde Kali (10.10.10.5) hacia Metasploitable (192.168.50.20). El tráfico se pierde por completo, confirmando que la red interna está oculta para nosotros.
 
 ![Evidencia Ping](ping-kali-metasploitable.png)
@@ -34,17 +34,17 @@ Acceso a la Máquina Puente: Comprobamos que tenemos visibilidad directa con el 
 
 ![Evidencia Ping](ping-kali-windows.png)
 
-Paso 1.2: Conectividad desde la Máquina Puente (Windows Server 2012)
+### Paso 1.2: Conectividad desde la Máquina Puente (Windows Server 2012)
 Visibilidad del Objetivo Oculto: Validamos desde la consola del Windows Server que existe conectividad directa con la máquina Metasploitable (192.168.50.20) a través de su segunda interfaz de red interna. Esto demuestra que el servidor Windows es apto para actuar como pivote.
 
 ![Evidencia Ping](ping-windows-metasploitable.png)
 
 Direccionamiento local de Metasploitable: Verificación local en la máquina objetivo confirmando su IP estática asignada en el segmento interno.
 
-![Evidencia Ping](metasploitable-ip.png)
+![Evidencia Ip](metasploitable-ip.png)
 
 
-## 🚀 Fase 2: Reconocimiento y Descubrimiento del Vector de Entrada
+## Fase 2: Reconocimiento y Descubrimiento del Vector de Entrada
 
 Siguiendo la metodología profesional de auditoría en entornos de Caja Negra (Black Box), se realiza un reconocimiento activo sobre el host expuesto (`10.10.10.20`) para identificar los servicios prioritarios y definir el vector de explotación inicial.
 
@@ -52,7 +52,18 @@ Siguiendo la metodología profesional de auditoría en entornos de Caja Negra (B
 
 Lanzamos un análisis dirigido hacia los puertos clave de infraestructura para mapear las versiones exactas de los servicios en ejecución.
 
-![Evidencia Ping](escaneo-nmap-windows.png)
+![Escaneo Nmap](escaneo-nmap-windows.png)
+
+
+## Fase 3: Generación del Payload y Acceso Inicial
+
+Con el mapa de puertos claro, procedemos a construir nuestro vector de entrada. Generaremos un ejecutable malicioso personalizado y prepararemos el entorno en Kali Linux para interceptar la conexión reversa.
+
+### Paso 3.1: Generación del Payload Personalizado con Msfvenom
+
+Utilizamos la herramienta `msfvenom` para compilar un agente nativo de Windows en arquitectura de 64 bits. Este binario utilizará un canal TCP reverso apuntando directamente a nuestra IP de auditoría (`10.10.10.5`).
+
+![Payload Msfvenom](creacion-payload.png)
 
 
 
