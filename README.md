@@ -21,3 +21,20 @@ El escenario simula una infraestructura empresarial donde el atacante no tiene a
 2. **Explotación Inicial:** Conseguir una sesión de Meterpreter estable en el Windows Server mediante un payload personalizado de 64 bits.
 3. **Pivoting con Metasploit:** Configurar rutas automáticas (`autoroute`) hacia la red oculta.
 4. **Túnel de Red Global:** Desplegar un proxy SOCKS5 integrado con `proxychains` para auditar la red interna con herramientas externas como Nmap.
+
+## Fase 1: Verificación de Conectividad y Aislamiento
+
+Antes de lanzar cualquier ataque, es fundamental comprobar que las restricciones de red se cumplen para asegurar que el entorno de pivoting simula el escenario real del examen.
+
+### 1. Comprobación de aislamiento desde Kali Linux
+Intentamos enviar tráfico directo desde nuestra máquina de auditoría hacia el objetivo final (`192.168.50.20`). El resultado debe ser fallido (100% de paquetes perdidos), demostrando que no tenemos ruta directa.
+
+### 2. Comprobación de direccionamiento en el Objetivo (Metasploitable)
+Validamos que la máquina objetivo se encuentra correctamente levantada dentro del segmento interno e inaccesible (`192.168.50.0/24`):
+![Configuración de IP Estática en Metasploitable](imagen/metasploitable-ip.png)
+
+
+
+
+
+
