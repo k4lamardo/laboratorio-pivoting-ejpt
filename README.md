@@ -30,23 +30,20 @@ Aislamiento hacia el Objetivo Final: Intentamos enviar tráfico directo desde Ka
 
 ![Evidencia Ping](ping-kali-metasploitable.png)
 
-Bash
-ping -c 2 192.168.50.20
 Acceso a la Máquina Puente: Comprobamos que tenemos visibilidad directa con el Windows Server 2012 (10.10.10.20), el cual será nuestro único vector de entrada al laboratorio.
 
-Bash
-ping -c 2 10.10.10.20
+![Evidencia Ping](ping-kali-windows.png)
+
 Paso 1.2: Conectividad desde la Máquina Puente (Windows Server 2012)
 Visibilidad del Objetivo Oculto: Validamos desde la consola del Windows Server que existe conectividad directa con la máquina Metasploitable (192.168.50.20) a través de su segunda interfaz de red interna. Esto demuestra que el servidor Windows es apto para actuar como pivote.
 
-DOS
-ping 192.168.50.20
+![Evidencia Ping](ping-windows-metasploitable.png)
+
 Direccionamiento local de Metasploitable: Verificación local en la máquina objetivo confirmando su IP estática asignada en el segmento interno.
 
-Bash
-ifconfig eth0
 
-![Evidencia Ping](ping-kali-metasploitable.png)
+
+
 
 
 
