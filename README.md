@@ -22,8 +22,29 @@ El escenario simula una infraestructura empresarial donde el atacante no tiene a
 3. **Pivoting con Metasploit:** Configurar rutas automáticas (`autoroute`) hacia la red oculta.
 4. **Túnel de Red Global:** Desplegar un proxy SOCKS5 integrado con `proxychains` para auditar la red interna con herramientas externas como Nmap.
 
-### Paso 1.1: Evidencia de aislamiento desde la máquina atacante (Kali Linux)
-Se intenta lanzar un ping directo desde Kali (`10.10.10.5`) hacia el objetivo final oculto (`192.168.50.20`). Al no existir enrutamiento directo, el tráfico se pierde por completo (100% packet loss).
+Fase 1: Verificación de Conectividad y Aislamiento de Red
+Antes de lanzar cualquier explotación, se realiza una auditoría completa de la topología de red para demostrar el aislamiento de los activos y verificar los vectores de comunicación disponibles.
+
+Paso 1.1: Conectividad desde la Máquina Atacante (Kali Linux)
+Aislamiento hacia el Objetivo Final: Intentamos enviar tráfico directo desde Kali (10.10.10.5) hacia Metasploitable (192.168.50.20). El tráfico se pierde por completo, confirmando que la red interna está oculta para nosotros.
+
+![Evidencia Ping](ping-kali-metasploitable.png)
+
+Bash
+ping -c 2 192.168.50.20
+Acceso a la Máquina Puente: Comprobamos que tenemos visibilidad directa con el Windows Server 2012 (10.10.10.20), el cual será nuestro único vector de entrada al laboratorio.
+
+Bash
+ping -c 2 10.10.10.20
+Paso 1.2: Conectividad desde la Máquina Puente (Windows Server 2012)
+Visibilidad del Objetivo Oculto: Validamos desde la consola del Windows Server que existe conectividad directa con la máquina Metasploitable (192.168.50.20) a través de su segunda interfaz de red interna. Esto demuestra que el servidor Windows es apto para actuar como pivote.
+
+DOS
+ping 192.168.50.20
+Direccionamiento local de Metasploitable: Verificación local en la máquina objetivo confirmando su IP estática asignada en el segmento interno.
+
+Bash
+ifconfig eth0
 
 ![Evidencia Ping](ping-kali-metasploitable.png)
 
