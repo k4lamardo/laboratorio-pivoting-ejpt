@@ -27,11 +27,15 @@ Antes de lanzar cualquier explotación, se realiza una auditoría completa de la
 
 ### Paso 1.1: Conectividad desde la Máquina Atacante (Kali Linux)
 Aislamiento hacia el Objetivo Final: Intentamos enviar tráfico directo desde Kali (10.10.10.5) hacia Metasploitable (192.168.50.20). El tráfico se pierde por completo, confirmando que la red interna está oculta para nosotros.
-
+```bash
+ping -c 2 192.168.50.20
+```
 ![Evidencia Ping](ping-kali-metasploitable.png)
 
 Acceso a la Máquina Puente: Comprobamos que tenemos visibilidad directa con el Windows Server 2012 (10.10.10.20), el cual será nuestro único vector de entrada al laboratorio.
-
+```bash
+ping -c 2 10.10.10.20
+```
 ![Evidencia Ping](ping-kali-windows.png)
 
 ### Paso 1.2: Conectividad desde la Máquina Puente (Windows Server 2012)
