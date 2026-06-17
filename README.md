@@ -22,16 +22,13 @@ El escenario simula una infraestructura empresarial donde el atacante no tiene a
 3. **Pivoting con Metasploit:** Configurar rutas automáticas (`autoroute`) hacia la red oculta.
 4. **Túnel de Red Global:** Desplegar un proxy SOCKS5 integrado con `proxychains` para auditar la red interna con herramientas externas como Nmap.
 
-## Fase 1: Verificación de Conectividad y Aislamiento
+### Paso 1.1: Evidencia de aislamiento desde la máquina atacante (Kali Linux)
+Se intenta lanzar un ping directo desde Kali (`10.10.10.5`) hacia el objetivo final oculto (`192.168.50.20`). Al no existir enrutamiento directo, el tráfico se pierde por completo (100% packet loss).
 
-Antes de lanzar cualquier ataque, es fundamental comprobar que las restricciones de red se cumplen para asegurar que el entorno de pivoting simula el escenario real del examen.
+```bash
+ping -c 2 192.168.50.20
+![Evidencia Ping](ping-kali-metasploitable.png)
 
-### 1. Comprobación de aislamiento desde Kali Linux
-Intentamos enviar tráfico directo desde nuestra máquina de auditoría hacia el objetivo final (`192.168.50.20`). El resultado debe ser fallido (100% de paquetes perdidos), demostrando que no tenemos ruta directa.
-
-### 2. Comprobación de direccionamiento en el Objetivo (Metasploitable)
-Validamos que la máquina objetivo se encuentra correctamente levantada dentro del segmento interno e inaccesible (`192.168.50.0/24`):
-![Configuración de IP Estática en Metasploitable](metasploitable-ip.png)
 
 
 
