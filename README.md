@@ -31,8 +31,7 @@ Intentamos enviar tráfico directo desde nuestra máquina de auditoría hacia el
 
 ### 2. Comprobación de direccionamiento en el Objetivo (Metasploitable)
 Validamos que la máquina objetivo se encuentra correctamente levantada dentro del segmento interno e inaccesible (`192.168.50.0/24`):
-![Configuración de IP Estática en Metasploitable](./imagen/metasploitable-ip.png)
-
+![Configuración de IP Estática en Metasploitable](metasploitable-ip.png)
 
 
 
