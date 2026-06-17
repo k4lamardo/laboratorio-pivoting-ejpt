@@ -44,9 +44,15 @@ Direccionamiento local de Metasploitable: Verificación local en la máquina obj
 ![Evidencia Ping](metasploitable-ip.png)
 
 
+## 🚀 Fase 2: Reconocimiento y Descubrimiento del Vector de Entrada
 
+Siguiendo la metodología profesional de auditoría en entornos de Caja Negra (Black Box), se realiza un reconocimiento activo sobre el host expuesto (`10.10.10.20`) para identificar los servicios prioritarios y definir el vector de explotación inicial.
 
+### Paso 2.1: Escaneo Táctico de Puertos y Versiones con Nmap
 
+Lanzamos un análisis dirigido hacia los puertos clave de infraestructura para mapear las versiones exactas de los servicios en ejecución.
+
+![Evidencia Ping](escaneo-nmap-windows.png)
 
 
 
