@@ -80,8 +80,7 @@ Para trasladar el binario `agente64.exe` desde nuestra máquina de auditoría ha
 ```bash
 python3 -m http.server 80
 ```
-![malware-agente](descarga-malware-agente.png)
-
+![Payload](Transferencia-Payload.png)
 
 
 ### Paso 3.3: Configuración del Escuchador (Multi/Handler) en Metasploit
