@@ -114,9 +114,18 @@ Una vez completada la descarga web, se procede a la ejecución del binario `agen
 
 meterpreter >
 ```
-
 ![meterpreter](sesion-meterpreter.png)
 
+## Fase 4: Reconocimiento Interno y Enrutamiento (Pivoting)
 
+### Paso 4.1: Descubrimiento de Interfaces de Red
 
+Una vez establecido el acceso inicial y estabilizada la sesión de Meterpreter en el servidor **Windows Server 2012 (ENIGMA)**, iniciamos la fase de reconocimiento interno. El objetivo es identificar si el equipo actúa como un puente multihomed (con más de una interfaz de red conectada a otros segmentos aislados). 
+
+Ejecutamos el comando de diagnóstico de red dentro de la sesión activa:
+
+```bash
+meterpreter > ifconfig
+```
+![servidor](ifconfig-servidor.png)
 
