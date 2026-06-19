@@ -129,3 +129,16 @@ meterpreter > ifconfig
 ```
 ![servidor](ifconfig-servidor.png)
 
+Tras analizar el volcado del comando, se identifica la existencia de un segundo adaptador físico de red (**Interface 16**) parametrizado con la dirección IP `192.168.50.10` en un segmento `/24`. Esto confirma que el servidor actúa como un nodo de pivotaje hacia una zona desmilitarizada o red interna aislada.
+
+
+### Paso 4.2: Configuración del Enrutamiento Estático (Pivoting)
+
+Para permitir que las herramientas de Metasploit Framework alcancen el nuevo segmento descubierto (`192.168.50.0/24`) empleando el servidor comprometido como pasarela, ejecutamos el script automatizado `autoroute` desde la propia consola interactiva.
+
+```bash
+meterpreter > run autoroute -s 192.168.50.0/24
+[*] Adding a route to 192.168.50.0/24...
+```
+
+
