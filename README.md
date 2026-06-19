@@ -156,7 +156,7 @@ msf auxiliary(scanner/discovery/arp_sweep) > run
 ```
 Una vez validada la topología del segmento, se confirma que la dirección IP asignada a la máquina objetivo Metasploitable 2 dentro de la red privada es la 192.168.50.20.
 
-![autoroute](run-autoroute.png)
+![autoroute](runn-autoroute.png)
 
 ### Paso 4.4: Enumeración de Servicios mediante Portscan Interno
 Para verificar los servicios activos y mapear los vectores de entrada potenciales en la máquina objetivo a través del pivote, cargamos el módulo auxiliar de escaneo TCP enfocado en los puertos críticos de administración y transferencia (21, 22, 80, 445) apuntando hacia el host mapeado.
@@ -168,7 +168,7 @@ msf auxiliary(scanner/portscan/tcp) > set PORTS 21, 22, 80, 445
 msf auxiliary(scanner/portscan/tcp) > set THREADS 5
 msf auxiliary(scanner/portscan/tcp) > run
 ```
-![autoroute](runn-autoroute.png)
+![autoroute](run-autoroute.png)
 
 El resultado del escaneo reporta de forma exitosa que todos los puertos analizados se encuentran en estado abierto (TCP OPEN), dejando al descubierto la superficie de ataque del objetivo interno.
 
