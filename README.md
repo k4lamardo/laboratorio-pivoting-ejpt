@@ -168,7 +168,7 @@ msf auxiliary(scanner/portscan/tcp) > set PORTS 21, 22, 80, 445
 msf auxiliary(scanner/portscan/tcp) > set THREADS 5
 msf auxiliary(scanner/portscan/tcp) > run
 ```
-![autoroute](run-autoroute.png)
+![escaneo](escaneo-puertos-pivoting.png)
 
 El resultado del escaneo reporta de forma exitosa que todos los puertos analizados se encuentran en estado abierto (TCP OPEN), dejando al descubierto la superficie de ataque del objetivo interno.
 
